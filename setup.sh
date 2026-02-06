@@ -3,13 +3,13 @@
 # Defaults are pre-configured for Ægis — run without arguments for standard setup
 #
 # Usage: ./setup.sh [PROJECT_ID] [PROJECT_NAME] [FACULTY_ID]
-# Defaults: aegis "Ægis" a.simone.weil
+# Defaults: aegis "Ægis" a.SimoneWeil
 
 set -e
 
 PROJECT_ID="${1:-aegis}"
 PROJECT_NAME="${2:-Ægis}"
-FACULTY_ID="${3:-a.simone.weil}"
+FACULTY_ID="${3:-a.SimoneWeil}"
 GITHUB_ORG="${GITHUB_ORG:-InquiryInstitute}"
 REPO_NAME="atelier-${PROJECT_ID}"
 
