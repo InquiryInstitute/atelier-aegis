@@ -1,0 +1,16 @@
+{
+  "name": "@aegis/web-perception",
+  "version": "0.0.1",
+  "description": "Web MediaPipe WASM perception plugin for Ægis — Phase 0 prototype target",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@aegis/feature-stream": "workspace:*"
+  },
+  "license": "UNLICENSED"
+}

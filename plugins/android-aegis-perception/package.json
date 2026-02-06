@@ -1,0 +1,20 @@
+{
+  "name": "@aegis/android-perception",
+  "version": "0.0.1",
+  "description": "Android MediaPipe perception plugin for Ægis (Capacitor)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "android"],
+  "capacitor": {
+    "android": {
+      "src": "android"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@aegis/feature-stream": "workspace:*"
+  },
+  "license": "UNLICENSED"
+}

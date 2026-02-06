@@ -1,0 +1,17 @@
+{
+  "name": "atelier-aegis",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Ægis — An Atelier Instrument for Attentive Learning",
+  "workspaces": [
+    "packages/*",
+    "plugins/*",
+    "app"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "dev": "npm run dev --workspace=app",
+    "typecheck": "tsc --build tsconfig.json"
+  },
+  "license": "UNLICENSED"
+}

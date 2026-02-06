@@ -20,23 +20,63 @@ Stewarded by **a.Weil** — Faculty of Attention & Moral Perception
 - **A listening device for learning rhythms** — not affective surveillance
 - **A guardian of pace** — not classroom analytics for authority
 
-## What Ægis Does Not Do
+## Architecture
 
-- Monitor compliance
-- Optimize productivity
-- Label emotions
-- Grade attention
-- Surveil classrooms
+```
+atelier-aegis/
+├── app/                                  # Capacitor + shared UI
+├── packages/
+│   ├── feature-stream/                   # Canonical schema + PerceptionPlugin API
+│   ├── inference/                        # Learning-condition estimator (rule-based MVP)
+│   └── policy/                           # Pedagogical intervention engine
+├── plugins/
+│   ├── web-aegis-perception/             # MediaPipe WASM (Phase 0 — first target)
+│   ├── ios-aegis-perception/             # ARKit / Vision (Phase 1–2)
+│   └── android-aegis-perception/         # MediaPipe Face Landmarker (Phase 1)
+├── docs/
+│   ├── AEGIS.md                          # Instrument spec & moral charter
+│   └── APP_DESIGN.md                     # Full app design document
+├── index.html                            # GitHub Pages project page
+├── package.json                          # Monorepo (npm workspaces)
+└── tsconfig.json                         # Project references
+```
 
-## Design Principles
+## Platform Strategy
 
-**Anti-Surveillance Aesthetics**: No meters. No scores. No heatmaps. No red/green. No leaderboards.
+All platforms emit the same **Feature Stream** schema. The pedagogy engine is shared.
 
-**Presence, Not Measurement**: A subtle pulse — steady, wavering, or fading — always tappable, always explainable.
+| Platform | Best Tier | Backend |
+|----------|-----------|---------|
+| Web | Tier 1 | MediaPipe Tasks (WASM) — Phase 0 prototype |
+| Android | Tier 1 | MediaPipe Face Landmarker |
+| iOS / iPadOS | Tier 2 | ARKit Face Tracking (TrueDepth) |
 
-**Response by Offering**: Ægis never forces, interrupts aggressively, escalates authority, or notifies third parties.
+**Key design choice:** The pedagogy engine never depends on TrueDepth-only features. Those only increase confidence.
 
-**Architectural Safeguards**:
+## Capability Tiers
+
+| Tier | Input | Available On |
+|------|-------|-------------|
+| **Tier 0** | Interaction telemetry only | All platforms (camera off) |
+| **Tier 1** | RGB face tracking | Web, Android, iOS fallback |
+| **Tier 2** | TrueDepth / ARKit | iPhone X+, iPad Pro |
+
+## Learning Conditions (Not Emotions)
+
+Ægis never infers emotion. It infers **learning conditions**:
+
+| Condition | Signals |
+|-----------|---------|
+| **Attentive** | sustained orientation + interaction flow |
+| **Wandering** | frequent gaze breaks, posture drift |
+| **Confused** | retries + hesitation + micro-withdrawal |
+| **Overloaded** | elevated arousal + reduced precision |
+| **Fatigued** | blink rate + slowing responses |
+
+Each state is probabilistic, time-windowed, confidence-scored, and explicitly revisable.
+
+## Ethical Safeguards (Architectural)
+
 1. Local-first inference
 2. No raw perceptual retention
 3. User-visible opt-out at all times
@@ -44,6 +84,13 @@ Stewarded by **a.Weil** — Faculty of Attention & Moral Perception
 5. No teacher-facing individual data
 6. Aggregate-only classroom views (optional)
 7. Explicit uncertainty disclosure
+
+## Build Order
+
+1. **Web Tier 1 prototype** — fast iteration, easy demo
+2. **Capacitor shell** — reusing same TS inference / pedagogy
+3. **Native plugins per platform** — emitting the same feature schema
+4. **ARKit Tier 2** — premium fidelity layer
 
 ## Placement
 
@@ -58,33 +105,15 @@ Atelier → Instruments → Ægis
 | a.Dewey | feedback & experience |
 | **a.Weil** | **moral steward** |
 
-## Project Page
-
-Visit: https://InquiryInstitute.github.io/atelier-aegis/
-
 ## Documentation
 
-The full instrument specification lives in [`docs/AEGIS.md`](docs/AEGIS.md) — this is the canonical design document covering stewardship, sensorium, inference model, pedagogical response engine, UI doctrine, and ethical safeguards.
+- [`docs/AEGIS.md`](docs/AEGIS.md) — Instrument specification & moral charter
+- [`docs/APP_DESIGN.md`](docs/APP_DESIGN.md) — Full app design document
+- [`packages/feature-stream/`](packages/feature-stream/) — Feature stream schema + plugin API
 
-## RAG Corpus
+## Project Page
 
-This project's `docs/` directory serves as the RAG corpus for the a.Weil chat widget on the project page. To process vectors:
-
-```bash
-npx tsx scripts/process-project-corpus-vectors.ts --project-id aegis
-```
-
-## Setup
-
-This repository was created from the [Atelier Template](https://github.com/InquiryInstitute/atelier-template).
-
-### GitHub Pages
-
-1. Go to repository Settings → Pages
-2. Under "Source", select "GitHub Actions"
-3. Save
-
-The site deploys automatically on push to `main`.
+https://inquiryinstitute.github.io/atelier-aegis/
 
 ---
 

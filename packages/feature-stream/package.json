@@ -1,0 +1,23 @@
+{
+  "name": "@aegis/feature-stream",
+  "version": "0.0.1",
+  "description": "Canonical feature stream schema and perception plugin API for Ægis",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./perception-plugin": {
+      "types": "./dist/perception-plugin.d.ts",
+      "default": "./dist/perception-plugin.js"
+    }
+  },
+  "license": "UNLICENSED"
+}

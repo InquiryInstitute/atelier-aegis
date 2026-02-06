@@ -1,0 +1,20 @@
+{
+  "name": "@aegis/ios-perception",
+  "version": "0.0.1",
+  "description": "iOS ARKit/Vision perception plugin for Ægis (Capacitor)",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "ios"],
+  "capacitor": {
+    "ios": {
+      "src": "ios"
+    }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@aegis/feature-stream": "workspace:*"
+  },
+  "license": "UNLICENSED"
+}

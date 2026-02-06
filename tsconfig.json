@@ -1,0 +1,8 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/feature-stream" },
+    { "path": "packages/inference" },
+    { "path": "packages/policy" }
+  ]
+}
