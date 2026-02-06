@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
+  base: '/atelier-aegis/',
   resolve: {
     alias: {
       '@aegis/feature-stream': resolve(__dirname, '../packages/feature-stream/src/index.ts'),
