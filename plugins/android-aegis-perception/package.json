@@ -14,7 +14,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@aegis/feature-stream": "workspace:*"
+    "@aegis/feature-stream": "*"
   },
   "license": "UNLICENSED"
 }

@@ -10,7 +10,7 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@aegis/feature-stream": "workspace:*"
+    "@aegis/feature-stream": "*"
   },
   "license": "UNLICENSED"
 }

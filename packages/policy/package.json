@@ -10,8 +10,8 @@
     "dev": "tsc --watch"
   },
   "dependencies": {
-    "@aegis/feature-stream": "workspace:*",
-    "@aegis/inference": "workspace:*"
+    "@aegis/feature-stream": "*",
+    "@aegis/inference": "*"
   },
   "license": "UNLICENSED"
 }

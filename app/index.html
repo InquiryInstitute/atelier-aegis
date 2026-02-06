@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Ægis — Attentive Learning</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◉</text></svg>">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ================================================================ -->
+    <!-- Session Home                                                     -->
+    <!-- ================================================================ -->
+    <div id="screen-home" class="screen session-home active">
+      <h1 class="session-home__title">ÆGIS</h1>
+      <p class="session-home__subtitle">An instrument for attentive learning</p>
+
+      <div class="session-home__epigraph">
+        <blockquote>
+          "Attention, taken to its highest degree, is the same thing as generosity."
+        </blockquote>
+        <cite>— Simone Weil</cite>
+      </div>
+
+      <div class="session-home__actions">
+        <button id="btn-start-lesson" class="session-home__btn session-home__btn--primary">
+          Begin lesson
+          <small>Attention as Generosity</small>
+        </button>
+        <button id="btn-privacy" class="session-home__btn">
+          Privacy &amp; camera
+          <small>Controls and transparency</small>
+        </button>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- Lesson Player                                                    -->
+    <!-- ================================================================ -->
+    <div id="screen-lesson" class="screen lesson-player">
+      <div class="lesson-player__header">
+        <button id="btn-back" class="lesson-player__back">← Back</button>
+        <span id="lesson-title" class="lesson-player__title"></span>
+        <div class="lesson-player__controls">
+          <div id="pulse" class="pulse-indicator pulse-indicator--off" title="How does Ægis see this?"></div>
+        </div>
+      </div>
+
+      <div id="lesson-scroller" class="lesson-player__content">
+        <div id="lesson-content" class="lesson-player__inner">
+          <!-- Lesson content rendered here -->
+        </div>
+      </div>
+
+      <div id="status-bar" class="status-bar">
+        <div class="status-bar__left">
+          <span id="status-tier" class="status-bar__tier">initializing</span>
+          <span id="status-perception"></span>
+        </div>
+        <span id="status-reasoning"></span>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- Privacy Controls                                                 -->
+    <!-- ================================================================ -->
+    <div id="screen-privacy" class="screen privacy-controls">
+      <div class="privacy-controls__inner">
+        <h2 class="privacy-controls__title">Privacy &amp; Controls</h2>
+
+        <div class="privacy-controls__group">
+          <div class="privacy-controls__row">
+            <div>
+              <div class="privacy-controls__label">Camera</div>
+              <div class="privacy-controls__desc">
+                Used to notice when you might be tired or confused.
+                No images are stored.
+              </div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="toggle-camera">
+              <span class="toggle__track"></span>
+              <span class="toggle__thumb"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="privacy-controls__group">
+          <div class="privacy-controls__row">
+            <div>
+              <div class="privacy-controls__label">Processing</div>
+              <div class="privacy-controls__desc">
+                All inference runs on your device. Nothing leaves the browser.
+              </div>
+            </div>
+            <span style="font-size: 0.8rem; color: var(--mist);">on-device</span>
+          </div>
+        </div>
+
+        <div class="privacy-controls__group">
+          <div class="privacy-controls__row">
+            <div>
+              <div class="privacy-controls__label">Data stored</div>
+              <div class="privacy-controls__desc">
+                Only your journal reflections (locally). No session recordings.
+                No attention scores. No behavioral profiles.
+              </div>
+            </div>
+            <span style="font-size: 0.8rem; color: var(--mist);">local only</span>
+          </div>
+        </div>
+
+        <div class="privacy-controls__group" style="border-bottom: none;">
+          <div class="privacy-controls__row">
+            <div>
+              <div class="privacy-controls__label">What Ægis does not do</div>
+              <div class="privacy-controls__desc">
+                Does not recognize your face. Does not label your emotions.
+                Does not share data with teachers. Does not score your attention.
+                Does not compare you to others.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button id="btn-privacy-back" class="privacy-controls__back">← Return</button>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- Intervention Sheet (overlay)                                     -->
+    <!-- ================================================================ -->
+    <div id="intervention-overlay" class="intervention-overlay">
+      <div class="intervention-sheet">
+        <div class="intervention-sheet__message"></div>
+        <div class="intervention-sheet__options"></div>
+        <div class="intervention-sheet__confidence"></div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- Explainability Drawer                                            -->
+    <!-- ================================================================ -->
+    <div id="explainability-drawer" class="explainability-drawer">
+      <div class="explainability-drawer__header">
+        <span class="explainability-drawer__title">How Ægis sees this</span>
+        <button id="drawer-close" class="explainability-drawer__close">×</button>
+      </div>
+      <div class="explainability-drawer__body">
+        <div class="explainability-drawer__section">
+          <div class="explainability-drawer__section-title">Learning conditions</div>
+          <div id="drawer-conditions"></div>
+        </div>
+
+        <div class="explainability-drawer__section">
+          <div class="explainability-drawer__section-title">Confidence</div>
+          <div class="explainability-drawer__confidence">
+            <span class="explainability-drawer__confidence-label">Overall estimate confidence</span>
+            <span id="drawer-confidence" class="explainability-drawer__confidence-value">—</span>
+          </div>
+        </div>
+
+        <div class="explainability-drawer__section">
+          <div class="explainability-drawer__section-title">What contributed</div>
+          <div id="drawer-drivers"></div>
+        </div>
+
+        <div class="explainability-drawer__section">
+          <div class="explainability-drawer__section-title">What was not used</div>
+          <div id="drawer-not-used"></div>
+        </div>
+
+        <div class="explainability-drawer__disclaimer">
+          These estimates are probabilistic and provisional. Ægis does not claim
+          knowledge of your mind. It offers attentional hypotheses, not diagnoses.
+          It may be mistaken.
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- Camera Permission Dialog                                         -->
+    <!-- ================================================================ -->
+    <div id="camera-dialog" class="camera-dialog">
+      <div class="camera-dialog__card">
+        <div class="camera-dialog__icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+          </svg>
+        </div>
+        <p class="camera-dialog__text">
+          Ægis can use your camera to notice when you might be
+          tired or confused, so it can offer gentler pacing or a break.
+        </p>
+        <p class="camera-dialog__privacy">
+          No images are stored. Processing happens entirely on your device.
+          You can turn this off at any time.
+        </p>
+        <div class="camera-dialog__actions">
+          <button id="btn-camera-allow" class="camera-dialog__btn camera-dialog__btn--allow">
+            Allow camera
+          </button>
+          <button id="btn-camera-skip" class="camera-dialog__btn camera-dialog__btn--skip">
+            Not now — continue without
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================ -->
+    <!-- Micro-break overlay                                              -->
+    <!-- ================================================================ -->
+    <div id="micro-break" class="micro-break">
+      <div class="micro-break__message">
+        Your attention has been generous.<br>A short breath.
+      </div>
+      <div class="micro-break__breath"></div>
+      <div class="micro-break__timer"></div>
+      <button class="micro-break__dismiss">Return to lesson</button>
+    </div>
+
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

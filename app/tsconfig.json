@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "paths": {
+      "@aegis/feature-stream": ["../packages/feature-stream/src/index"],
+      "@aegis/feature-stream/*": ["../packages/feature-stream/src/*"],
+      "@aegis/inference": ["../packages/inference/src/index"],
+      "@aegis/inference/*": ["../packages/inference/src/*"],
+      "@aegis/policy": ["../packages/policy/src/index"],
+      "@aegis/policy/*": ["../packages/policy/src/*"]
+    }
+  },
+  "include": ["src"]
+}
