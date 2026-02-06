@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ægis — Atelier Instrument for Attentive Learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ink: #1a1a1a;
+            --paper: #f7f6f3;
+            --stone: #e8e6e1;
+            --mist: #c8c5be;
+            --quiet: #9a9590;
+            --breath: #d4d1cb;
+        }
+
+        body {
+            font-family: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
+            line-height: 1.7;
+            color: var(--ink);
+            background: var(--paper);
+        }
+
+        /* --- Header: restrained, not declarative --- */
+        header {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 32px 0;
+        }
+
+        header .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 24px;
+            color: var(--mist);
+            text-decoration: none;
+            font-size: 0.875rem;
+            letter-spacing: 0.02em;
+        }
+
+        .back-link:hover {
+            color: var(--paper);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--mist);
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        /* --- Body content --- */
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .epigraph {
+            margin: 48px auto;
+            padding: 32px 0;
+            border-top: 1px solid var(--stone);
+            border-bottom: 1px solid var(--stone);
+            text-align: center;
+        }
+
+        .epigraph blockquote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--quiet);
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .epigraph cite {
+            display: block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            font-style: normal;
+            color: var(--mist);
+        }
+
+        /* --- Sections --- */
+        section {
+            margin: 40px 0;
+        }
+
+        h2 {
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--quiet);
+            margin-bottom: 16px;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        .is-not {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin: 24px 0;
+        }
+
+        .is-not h3 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        .is-not .is h3 {
+            color: var(--ink);
+        }
+
+        .is-not .is-not-col h3 {
+            color: var(--mist);
+        }
+
+        .is-not ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .is-not li {
+            padding: 4px 0;
+            font-size: 0.95rem;
+        }
+
+        .is-not .is li::before {
+            content: "\2022 ";
+            color: var(--ink);
+        }
+
+        .is-not .is-not-col li {
+            color: var(--mist);
+            text-decoration: line-through;
+            text-decoration-color: var(--breath);
+        }
+
+        /* --- Pulse indicator demo --- */
+        .pulse-demo {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            justify-content: center;
+            margin: 32px 0;
+            padding: 24px;
+            background: var(--ink);
+            border-radius: 4px;
+        }
+
+        .pulse-state {
+            text-align: center;
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--mist);
+            margin: 0 auto 8px;
+        }
+
+        .pulse-dot.steady {
+            animation: pulse-steady 3s ease-in-out infinite;
+            background: var(--paper);
+        }
+
+        .pulse-dot.wavering {
+            animation: pulse-waver 1.5s ease-in-out infinite;
+            background: var(--breath);
+        }
+
+        .pulse-dot.fading {
+            animation: pulse-fade 4s ease-in-out infinite;
+            background: var(--mist);
+        }
+
+        @keyframes pulse-steady {
+            0%, 100% { opacity: 0.85; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        @keyframes pulse-waver {
+            0%, 100% { opacity: 0.5; transform: scale(0.9); }
+            30% { opacity: 0.9; transform: scale(1.05); }
+            60% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        @keyframes pulse-fade {
+            0%, 100% { opacity: 0.15; transform: scale(0.8); }
+            50% { opacity: 0.35; transform: scale(0.9); }
+        }
+
+        .pulse-label {
+            font-size: 0.75rem;
+            color: var(--mist);
+            letter-spacing: 0.05em;
+        }
+
+        /* --- Safeguards list --- */
+        .safeguards {
+            list-style: none;
+            padding: 0;
+            counter-reset: safeguard;
+        }
+
+        .safeguards li {
+            counter-increment: safeguard;
+            padding: 8px 0;
+            padding-left: 32px;
+            position: relative;
+            border-bottom: 1px solid var(--stone);
+        }
+
+        .safeguards li::before {
+            content: counter(safeguard);
+            position: absolute;
+            left: 0;
+            color: var(--mist);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* --- Response grammar --- */
+        .responses {
+            list-style: none;
+            padding: 0;
+        }
+
+        .responses li {
+            padding: 8px 0;
+            font-style: italic;
+            color: var(--quiet);
+            border-left: 2px solid var(--stone);
+            padding-left: 16px;
+            margin-bottom: 8px;
+        }
+
+        /* --- Steward --- */
+        .steward {
+            margin: 48px 0 32px;
+            padding: 24px;
+            background: white;
+            border: 1px solid var(--stone);
+            border-radius: 4px;
+        }
+
+        .steward-name {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--quiet);
+            margin-bottom: 4px;
+        }
+
+        .steward-title {
+            font-weight: 400;
+            font-size: 1rem;
+        }
+
+        .steward-principle {
+            margin-top: 12px;
+            font-style: italic;
+            color: var(--quiet);
+            font-size: 0.95rem;
+        }
+
+        /* --- Chat section --- */
+        .chat-section {
+            margin: 48px 0;
+            padding-top: 32px;
+            border-top: 1px solid var(--stone);
+        }
+
+        .chat-section p {
+            color: var(--quiet);
+            font-size: 0.95rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--mist);
+            border-top: 1px solid var(--stone);
+            margin-top: 48px;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--quiet);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 540px) {
+            .is-not {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .pulse-demo {
+                gap: 20px;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="https://atelier.inquiry.institute" class="back-link">&larr; Back to Atelier</a>
+            <h1>&AElig;GIS</h1>
+            <div class="subtitle">An Atelier Instrument for Attentive Learning</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="epigraph">
+            <blockquote>
+                &ldquo;Attention, taken to its highest degree, is the same thing as generosity.&rdquo;
+            </blockquote>
+            <cite>&mdash; Simone Weil</cite>
+        </div>
+
+        <div class="steward">
+            <div class="steward-name">Stewarded by a.Weil</div>
+            <div class="steward-title">Faculty of Attention &amp; Moral Perception</div>
+            <div class="steward-principle">Canonical tone: &ldquo;I may be mistaken.&rdquo;</div>
+        </div>
+
+        <section>
+            <h2>Purpose</h2>
+            <p>
+                &AElig;gis exists to support attention as a moral and pedagogical act.
+                It notices when learning falters, responds with care, protects the dignity
+                of the pupil, and refuses coercion, ranking, or extraction.
+            </p>
+            <p>
+                It does not monitor compliance. It does not optimize productivity.
+                It does not label emotions, grade attention, or surveil classrooms.
+            </p>
+        </section>
+
+        <section>
+            <h2>What &AElig;gis Is</h2>
+            <div class="is-not">
+                <div class="is">
+                    <h3>&AElig;gis Is</h3>
+                    <ul>
+                        <li>an instrument</li>
+                        <li>a studio aid</li>
+                        <li>a listening device for learning rhythms</li>
+                        <li>a guardian of pace</li>
+                    </ul>
+                </div>
+                <div class="is-not-col">
+                    <h3>&AElig;gis Is Not</h3>
+                    <ul>
+                        <li>emotion recognition software</li>
+                        <li>behavior scoring</li>
+                        <li>affective surveillance</li>
+                        <li>classroom analytics for authority</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Presence</h2>
+            <p>A subtle pulse, not a gauge. No meters. No scores. No heatmaps. No red/green.</p>
+            <div class="pulse-demo" role="img" aria-label="Pulse indicator demonstration: steady, wavering, and fading states">
+                <div class="pulse-state">
+                    <div class="pulse-dot steady"></div>
+                    <div class="pulse-label">steady</div>
+                </div>
+                <div class="pulse-state">
+                    <div class="pulse-dot wavering"></div>
+                    <div class="pulse-label">wavering</div>
+                </div>
+                <div class="pulse-state">
+                    <div class="pulse-dot fading"></div>
+                    <div class="pulse-label">fading</div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>How &AElig;gis Speaks</h2>
+            <ul class="responses">
+                <li>&ldquo;We may have moved too quickly.&rdquo;</li>
+                <li>&ldquo;Would another form help?&rdquo;</li>
+                <li>&ldquo;Shall we pause briefly?&rdquo;</li>
+                <li>&ldquo;A smaller step might be kinder.&rdquo;</li>
+            </ul>
+            <p style="margin-top: 16px; font-size: 0.9rem; color: var(--quiet);">
+                &AElig;gis responds only by offering. Never by forcing, interrupting aggressively,
+                escalating authority, or notifying third parties.
+            </p>
+        </section>
+
+        <section>
+            <h2>Ethical Safeguards</h2>
+            <p style="font-size: 0.9rem; color: var(--quiet); margin-bottom: 16px;">
+                These are architectural, not policy-only.
+            </p>
+            <ol class="safeguards">
+                <li>Local-first inference</li>
+                <li>No raw perceptual retention</li>
+                <li>User-visible opt-out at all times</li>
+                <li>No silent mode changes</li>
+                <li>No teacher-facing individual data</li>
+                <li>Aggregate-only classroom views (optional)</li>
+                <li>Explicit uncertainty disclosure</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Calibration</h2>
+            <p>
+                &AElig;gis improves by asking, not assuming.
+                Occasional prompts &mdash; <em>&ldquo;Was that confusing?&rdquo;</em>,
+                <em>&ldquo;Too fast / just right / too slow&rdquo;</em> &mdash;
+                personalize thresholds, reinforce agency, and never train
+                population-wide models without consent.
+            </p>
+        </section>
+
+        <div class="chat-section">
+            <h2>Converse with a.Weil</h2>
+            <p>
+                Ask questions about &AElig;gis, attention as moral practice,
+                or the instrument&rsquo;s design philosophy.
+            </p>
+            <div id="matrix-chat-widget"
+                 data-project-id="aegis"
+                 data-faculty-id="a.simone.weil">
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            Part of <a href="https://atelier.inquiry.institute">Atelier</a> &middot;
+            <a href="https://inquiry.institute">Inquiry Institute</a>
+        </p>
+        <p style="margin-top: 8px;">
+            Instrument class: Atelier &middot; Steward: a.Weil
+        </p>
+    </footer>
+
+    <script src="https://atelier.inquiry.institute/widgets/matrix-chat-widget.js"></script>
+</body>
+</html>
